@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Get a timestamped VOD link for a Twitch clip.">
+
+    <title>Clipstamp! - Timestamps for Twitch Clips</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  </head>
+
+<section class="container grid-960">
+  <header class="navbar">
+    <section class="navbar-section">
+      <a href="#" class="navbar-brand mr-10">Clipstamp</a>
+    </section>
+  </header>
+</section>
+
+
+<div class="container grid-960" role="main">
+  <div class="toast toast-primary" role="alert"><%= get_flash(@conn, :info) %></div>
+  <div class="toast toast-error" role="alert"><%= get_flash(@conn, :error) %></div>
+  <%= render @view_module, @view_template, assigns %>
+</div>
+
+<script src="<%= static_path(@conn, "/js/app.js") %>"></script>
