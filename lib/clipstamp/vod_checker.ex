@@ -68,13 +68,14 @@ defmodule Clipstamp.VODChecker do
     {:keep_state_and_data, [{:reply, from, state}]}
   end
 
-  def handle_event(:info, :fetch, _state, %Data{slug: slug, backoff: 5}) do
+  def handle_event(:info, :fetch, _state, %Data{slug: slug, backoff: 15}) do
       Clipstamp.Web.Endpoint.broadcast("slug:" <> slug, "not_found", %{})
       :stop
   end
 
   def handle_event(:info, :fetch, state, data) when state in [:fresh, :trying] do
     %Data{slug: slug, backoff: backoff} = data
+    Clipstamp.Web.Endpoint.broadcast("slug:" <> slug, "keepalive", %{backoff: backoff})
     Logger.debug("Updating")
     with {:ok, url} <- fetch(slug) do
       Clipstamp.Web.Endpoint.broadcast("slug:" <> slug, "found", %{url: url})
@@ -88,7 +89,7 @@ defmodule Clipstamp.VODChecker do
         :stop
       reason ->
         IO.inspect reason
-        Process.send_after(self(), :fetch, :math.pow(30_000, backoff))
+        Process.send_after(self(), :fetch, 30_000 * backoff)
         {:next_state, :trying, %Data{data | backoff: backoff + 1}}
     end
   end
