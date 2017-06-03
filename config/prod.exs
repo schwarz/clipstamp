@@ -16,7 +16,7 @@ use Mix.Config
 config :clipstamp, Clipstamp.Web.Endpoint,
   on_init: {Clipstamp.Web.Endpoint, :load_from_system_env, []},
   url: [scheme: "https", host: "clipstamp.herokuapp.com", port: 443],
-  force_ssl: [rewrite_on: [:x_forwarded_proto]]
+  force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
