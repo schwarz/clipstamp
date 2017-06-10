@@ -1,3 +1,11 @@
+if(window.Notification && Notification.permission !== "granted") {
+  Notification.requestPermission(status => {
+    if (Notification.permission !== status) {
+      Notification.permission = status
+    }
+  })
+}
+
 import {Socket} from "phoenix"
 
 let socket = new Socket("/socket", {params: {token: window.userToken}})
@@ -5,8 +13,6 @@ socket.connect()
 
 let clipForm = document.querySelector("#clip-form")
 let clipURL = document.querySelector("#clip-url")
-let clipHint = document.querySelector("#clip-hint")
-let clipResult = document.querySelector("#clip-result")
 
 clipForm.addEventListener("submit", event => {
   let slug = clipURL.value.split("/").pop()
@@ -18,13 +24,17 @@ clipForm.addEventListener("submit", event => {
 
   slugChannel.on("found", payload => {
     document.querySelector("#clip-form > button").classList.remove("loading")
-    clipResult.innerHTML = "<mark><a href='" + payload.url + "'>" + payload.url + "</a></mark>"
-    console.log("found", payload)
+    document.querySelector("#clip-result").innerHTML = "<mark><a href='" + payload.url + "'>" + payload.url + "</a></mark>"
+    if (window.Notification && Notification.permission === "granted") {
+      let n = new Notification("Clipstamp", {body: "Your timestamped VOD is ready."})
+      setTimeout(n.close.bind(n), 5000)
+    }
+    slugChannel.leave()
   })
 
   slugChannel.on("not_found", payload => {
     document.querySelector("#clip-form > button").classList.remove("loading")
-    console.log("Failed to fetch timestamp.")
+    slugChannel.leave()
   })
 
   event.preventDefault()

@@ -5,7 +5,7 @@
   <form id="clip-form">
     <div class="form-group">
       <label class="form-label" for="clip-url">URL</label>
-      <input class="form-input" id="clip-url" type="text" name="clip-url" placeholder="https://clips.twitch.tv/SnappyHorribleGoshawkDAESuppy">
+      <input class="form-input" id="clip-url" type="text" name="clip-url" placeholder="https://clips.twitch.tv/SnappyHorribleGoshawkDAESuppy" autofocus>
     </div>
     <button class="btn btn-primary" type="submit">Get timestamp</button>
   </form>
