@@ -69,7 +69,7 @@ defmodule Clipstamp.VODChecker do
   end
 
   def handle_event(:info, :fetch, _state, %Data{slug: slug, backoff: 15}) do
-      Clipstamp.Web.Endpoint.broadcast("slug:" <> slug, "not_found", %{})
+      Clipstamp.Web.Endpoint.broadcast("slug:" <> slug, "timed_out", %{})
       :stop
   end
 

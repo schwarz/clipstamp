@@ -1,13 +1,8 @@
 <div class="container">
   <h1>Clipstamp</h1>
   <p>Create a clip when the map starts and edit it to start where you want the timestamp to be.</p>
-  <p id="clip-result"></p>
-  <form id="clip-form">
-    <div class="form-group">
-      <label class="form-label" for="clip-url">URL</label>
-      <input class="form-input" id="clip-url" type="text" name="clip-url" placeholder="https://clips.twitch.tv/SnappyHorribleGoshawkDAESuppy" autofocus>
-    </div>
-    <button class="btn btn-primary" type="submit">Get timestamp</button>
-  </form>
+  <div id="clip-app">
+    <noscript>Clipstamp requires JavaScript to work.</noscript>
+  </div>
 </div>
 
